@@ -4,7 +4,7 @@ I wrote a simple guess the number game using java. It runs in the console and us
 
 Making a guess the number game seemed like it would be a lot more fun than a file reader/writer.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/RPN2qdoSn2Q)
 
 # Development Environment
 
