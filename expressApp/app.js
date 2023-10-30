@@ -27,7 +27,10 @@ myBook = JSON.parse(myBook)
 app.get('/', (req, res) => {
   const name = myBook[0]
   //res.send('Hello World!')
-  res.send(name.username)
+  res.render('index',{
+    name: name.username,
+    email: name.email
+  })
 })
 
 app.listen(port, () => {
