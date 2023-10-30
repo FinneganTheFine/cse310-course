@@ -19,7 +19,7 @@ const user = 0;
 connection.query('SELECT * from user', (err, rows, fields) => {
   if (err) throw err
   myBook = rows
-  console.log('The solution is: ', rows)
+  //console.log('The solution is: ', rows)
 })
 
 myBook = JSON.parse(myBook)
