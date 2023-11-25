@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import mysql from 'mysql';
+import axios from 'axios';
 
 function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: 'password',
-      database: 'mydb'
-    });
-
-    connection.connect();
-
-    connection.query('SELECT * FROM mytable', (error, results) => {
-      if (error) throw error;
-      setData(results);
-    });
-
-    connection.end();
+    async function fetchData() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/data');
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
   }, []);
 
   return (
     <div>
-      {data && data.map(row => (
-        <div key={row.id}>{row.name}</div>
+      {data.map(row => (
+        <div key={row.UID}>  
+          <p>Name: {row.username}</p> 
+          <p>Email: {row.email}</p>
+        </div>
       ))}
     </div>
   );
