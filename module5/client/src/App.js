@@ -1,17 +1,34 @@
-// Frontend React App
-
 import React, { useState, useEffect } from 'react';
+import mysql from 'mysql';
 
 function App() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch('/api/data')
-      .then(res => res.json())
-      .then(data => setData(data.message));
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'password',
+      database: 'mydb'
+    });
+
+    connection.connect();
+
+    connection.query('SELECT * FROM mytable', (error, results) => {
+      if (error) throw error;
+      setData(results);
+    });
+
+    connection.end();
   }, []);
 
-  return <h1>{data}</h1>;
+  return (
+    <div>
+      {data && data.map(row => (
+        <div key={row.id}>{row.name}</div>
+      ))}
+    </div>
+  );
 }
 
 export default App;
