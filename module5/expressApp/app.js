@@ -1,43 +1,46 @@
-const express = require('express')
+// Imports
+const express = require('express');
+const mysql = require('mysql');
 const cors = require('cors');
-const app = express()
-app.use(express.json()); 
-app.use(express.urlencoded({extended: false}));
+
+// Setup
+const app = express();
+app.use(express.json());
 app.use(cors());
-const port = 3000
-const mysql = require('mysql')
-require('dotenv').config()
+
+// DB Connection
 const db = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.USER,
-  password: process.env.PASS,
-  database: 'sharkdb',
-  port: process.env.PORT
-})
-//Get data
+  password: process.env.PASS,  
+  database: 'sharkdb'
+});
+
+// APIs
 app.get('/api/data', (req, res) => {
   db.query('SELECT * FROM user', (error, results) => {
-    if (error) throw error;
-    
-    res.json(results);  
+    if (error) {
+      return res.status(500).json({error});
+    }
+    res.json(results);
   });
 });
-//Insert data
+
 app.post('/api/data', (req, res) => {
   const { name, email, password } = req.body;
-
-  db.query('INSERT INTO user SET ?', { 
+  db.query('INSERT INTO user SET ?', {
     username: name, 
     email: email,
-    password: password
+    password: password  
   }, (error, results) => {
-    if (error) throw error;
-    
-    res.json({message: 'Data inserted'});
-  })
+    if (error) {
+      return res.status(500).json({error});
+    } 
+    res.json({message: 'Data inserted'})
+  });
 });
-//remove html
-app.get('/', (req, res) => {
-  // Just call the API route
-  res.redirect('/api/data'); 
+
+// Listen
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
 });
