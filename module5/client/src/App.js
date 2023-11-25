@@ -15,6 +15,9 @@ function App() {
     }
     fetchData();
   }, []);
+  const insertData = async (data) => {
+    await axios.post('/api/data', data);  
+  }
 
   return (
     <div>
