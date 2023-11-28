@@ -2,6 +2,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+require('dotenv').config()
 
 // Setup
 const app = express();
@@ -41,6 +42,7 @@ app.post('/api/data', (req, res) => {
 });
 
 // Listen
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+const port = 8080;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
