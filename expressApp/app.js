@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 app.use(express.json()); 
 app.use(express.urlencoded({extended: false}));
-app.use(cors());
 const port = 3000
 const mysql = require('mysql')
 require('dotenv').config()
@@ -55,6 +54,18 @@ app.get('/', (req, res) => {
         <input type="number" name="id" placeholder="ID" required>
         <button type="submit">Delete</button>
       </form>
+
+      <h1>New Lendee</h1>
+      <form method="POST" action="/lendee">
+        <input type="text" name="name" placeholder="Lendee Name" required>
+        <input type="number" name="amount" placeholder="Amount Lent" required>
+        <input type="date" name="due" placeholder="Date Lent" required>
+        <input type="date" name="given" placeholder="Date Due" required>
+        <input type="number" name="phone" placeholder="Lendee Phone" required>
+        <input type="number" name="rating" placeholder="Lendee Rating" required>
+        <input type="number" name="lender" placeholder="Lender" required>
+        <button type="submit">New Lend</button>
+      </form>
     `);
   });
 });
@@ -84,6 +95,15 @@ app.post('/delete', (req, res) => {
   const { id } = req.body;
 
   db.query('DELETE FROM user WHERE UID = ?', [parseInt(id)], error => {
+    if (error) throw error;
+    res.redirect('/');
+  });
+});
+
+app.post('/lendee', (req, res) => {
+  const {name, amount, due, given, phone, rating, lender} = req.body;
+
+  db.query('INSERT INTO lendee_table (Lendee_Name, Lend_Amount, Lend_Due, Lend_Given, Lendee_Phone, Lendee_Rating, Lender) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, amount, due, given, phone, rating, lender], error => {
     if (error) throw error;
     res.redirect('/');
   });
