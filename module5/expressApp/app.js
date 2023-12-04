@@ -42,7 +42,7 @@ app.post('/api/data', (req, res) => {
   });
 });
 //Update User Data
-app.post('/api/data', (req, res) => {
+app.post('/api/updateuser', (req, res) => {
   const { id, name, email } = req.body;
   db.query('UPDATE user SET username = ?, email = ? WHERE UID = ?', [
     name,
@@ -57,7 +57,7 @@ app.post('/api/data', (req, res) => {
 });
 
 //Delete User
-app.post('/api/data', (req, res) => {
+app.post('/api/deleteuser', (req, res) => {
   const { id } = req.body;
   db.query('DELETE FROM user WHERE UID = ?', [
     parseInt(id)

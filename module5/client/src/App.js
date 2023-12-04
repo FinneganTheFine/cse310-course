@@ -46,13 +46,13 @@ function App() {
   const UpdateUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/data', {
+      await axios.post('http://localhost:8080/api/updateuser', {
         lender,  
         name,
         email
       });
       
-      alert('Data inserted!'); 
+      alert('Data Updated!'); 
     } catch (err) {
       console.log(err);
     }
@@ -60,7 +60,7 @@ function App() {
   const DeleteUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/data', {
+      await axios.post('http://localhost:8080/api/deleteuser', {
         lender,
       });
       
@@ -112,15 +112,15 @@ function App() {
 
       <h1>Update Data</h1>
       <form onSubmit={UpdateUser}>
-        <input type="number" name="lender" placeholder="Lender" onChange={(a) => setLender(a.target.value)}/>
         <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
+        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setLender(e.target.value)}/>
         <button type="submit">Update</button>
       </form>
 
       <h1>Delete Data</h1>  
       <form onSubmit={DeleteUser}>
-        <input type="number" name="lender" placeholder="Lender" onChange={(a) => setLender(a.target.value)}/>
+        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setLender(e.target.value)}/>
         <button type="submit">Delete</button>
       </form>
 
