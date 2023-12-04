@@ -47,7 +47,7 @@ app.post('/api/updateuser', (req, res) => {
   db.query('UPDATE user SET username = ?, email = ? WHERE UID = ?', [
     name,
     email, 
-    parseInt(id)
+    id
   ], (error, results) => {
     if (error) {
       return res.status(500).json({error});
@@ -60,7 +60,7 @@ app.post('/api/updateuser', (req, res) => {
 app.post('/api/deleteuser', (req, res) => {
   const { id } = req.body;
   db.query('DELETE FROM user WHERE UID = ?', [
-    parseInt(id)
+    id
   ], (error, results) => {
     if (error) {
       return res.status(500).json({error});

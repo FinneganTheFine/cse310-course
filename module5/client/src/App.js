@@ -112,9 +112,9 @@ function App() {
 
       <h1>Update Data</h1>
       <form onSubmit={UpdateUser}>
+        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setLender(e.target.value)}/>
         <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
-        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setLender(e.target.value)}/>
         <button type="submit">Update</button>
       </form>
 
