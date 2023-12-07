@@ -47,7 +47,7 @@ app.post('/api/updateuser', (req, res) => {
   db.query('UPDATE user SET username = ?, email = ? WHERE UID = ?', [
     name,
     email, 
-    id
+    parseInt(id)
   ], (error, results) => {
     if (error) {
       return res.status(500).json({error});
@@ -58,14 +58,26 @@ app.post('/api/updateuser', (req, res) => {
 
 //Delete User
 app.post('/api/deleteuser', (req, res) => {
-  const { id } = req.body;
-  db.query('DELETE FROM user WHERE UID = ?', [
-    id
-  ], (error, results) => {
+  const { id }= parseInt(req.body);
+
+  if(isNaN(id)) {
+    return res.status(400).json({error: 'Invalid ID'});
+  }
+
+  db.query('DELETE FROM user WHERE UID = ?', [id], (error, results) => {
     if (error) {
-      return res.status(500).json({error});
-    } 
-    res.json({message: 'Data Deleted'})
+      return res.status(500).json(error);
+    }
+
+    if(!results.affectedRows) {
+      return res.json({
+        message: 'User not found'
+      });
+    }
+
+    res.json({
+      message: 'User deleted'
+    });
   });
 });
 //Get Lendees
