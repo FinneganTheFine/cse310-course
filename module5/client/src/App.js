@@ -14,6 +14,7 @@ function App() {
   const [phone, setPhone] = useState('');
   const [rating, setRating] = useState('');
   const [lender, setLender] = useState('');
+  const [userID, setuserID] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -47,7 +48,7 @@ function App() {
     e.preventDefault();
     try {
       await axios.post('http://localhost:8080/api/updateuser', {
-        lender,  
+        userID,  
         name,
         email
       });
@@ -61,7 +62,7 @@ function App() {
     e.preventDefault();
     try {
       await axios.post('http://localhost:8080/api/deleteuser', {
-        lender,
+        userID
       });
       
       alert('User Deleted!'); 
@@ -112,7 +113,7 @@ function App() {
 
       <h1>Update Data</h1>
       <form onSubmit={UpdateUser}>
-        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setLender(e.target.value)}/>
+        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setuserID(e.target.value)}/>
         <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
         <button type="submit">Update</button>
@@ -120,7 +121,7 @@ function App() {
 
       <h1>Delete Data</h1>  
       <form onSubmit={DeleteUser}>
-        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setLender(e.target.value)}/>
+        <input type="number" name="lender" placeholder="Lender" onChange={(e) => setuserID(e.target.value)}/>
         <button type="submit">Delete</button>
       </form>
 

@@ -56,28 +56,31 @@ app.post('/api/updateuser', (req, res) => {
   });
 });
 
-//Delete User
+// Delete User
 app.post('/api/deleteuser', (req, res) => {
-  const { id }= parseInt(req.body);
 
-  if(isNaN(id)) {
-    return res.status(400).json({error: 'Invalid ID'});
-  }
+  const {id} = req.body;
+
+  // // Validate
+  // if(id === undefined) {
+  //   return res.status(400).send(id);
+  // }
+
+  // // Use parseInt to convert to number
+  // const userId = parseInt(id); 
+  
+  // // Handle invalid user id  
+  // if (isNaN(userId)) {
+  //   return res.status(400).send('Invalid user id');
+  // }
 
   db.query('DELETE FROM user WHERE UID = ?', [id], (error, results) => {
     if (error) {
-      return res.status(500).json(error);
+      return res.status(500).json(error); 
     }
 
-    if(!results.affectedRows) {
-      return res.json({
-        message: 'User not found'
-      });
-    }
+    res.json(results)
 
-    res.json({
-      message: 'User deleted'
-    });
   });
 });
 //Get Lendees
